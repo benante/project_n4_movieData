@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="static/styles.css" />
+    <title>Movie Data</title>
+  </head>
+  <body>
+    <header class="navbar borders">
+      <img src="static/video.png" alt="logo" class="logo" />
+      <form action="">
+        <input type="text" class="searchbar borders" />
+      </form>
+      <img src="static/video.png" alt="logo" class="logo" />
+    </header>
+    <div class="main borders">
+      <div class="control_panel">
+        <label for="orderBy">Order by:</label>
+        <select name="list" id="selector">
+          <option value="name">Name</option>
+          <option value="Year">Year</option>
+        </select>
+      </div>
+      <div class="moviesContainer"></div>
+    </div>
+  </body>
+  <script src="movies.js"></script>
+</html>

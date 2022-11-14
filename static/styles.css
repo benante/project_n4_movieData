@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    min-height: 100vh;
+    background-size: 79px;
+    /*background-image: url("film-reel.png");*/
+    opacity: 97%;
+    background-color: #FAECCD;
+}
+.navbar {
+    background-color: #B7E7E8;
+    width: 100%;
+    height: 100px;
+}
+.logo {
+    height: 50px;
+    position: relative;
+    top: 25px;
+}
+header {
+    display: flex;
+    justify-content: center;
+}
+form {
+    display: inline-block;
+    margin: 25px 20px;
+    height: 50px;
+    width: 50em;
+}
+.searchbar {
+    width: 100%;
+    height: 100%;
+}
+.main {
+    background-color: #D8EAF2;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+.control_panel {
+    display: inline-block;
+    align-self: center;
+    margin: 30px auto;
+}
+#selector {
+    width: 100px;
+}
+.moviesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+}
+
+
+.movieCard {
+    display: inline-block;
+    background-color: #eceeefb7;
+    max-width: 250px;
+    text-align: center;
+    border: solid;
+    border-width: thin;
+    margin: 20px;
+    box-shadow: 2px 4px 6px 0 rgba(108, 59, 59, 0.2);
+    padding: 15px;
+}
+.movieCard:hover {
+    box-shadow: 0 12px 24px 0 rgba(0,0,0,0.2);
+}
+.movieCard img {
+    width: 50%;
+}
+.movietitle {
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 10px 15px;
+}
+.borders {
+    border-radius: 10px;
+}
