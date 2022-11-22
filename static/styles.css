@@ -2,6 +2,7 @@
     box-sizing: border-box;
 }
 body {
+    margin: 0;
     min-height: 100vh;
     background-size: 509px;
     background-image: url("film-reel.png");
@@ -53,10 +54,7 @@ form {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    
 }
-
-
 .movieCard {
     display: inline-block;
     background-color: #eceeefb7;

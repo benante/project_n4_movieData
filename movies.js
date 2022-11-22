@@ -50,17 +50,16 @@ let titles = Object.keys(movieData)
 // Display movies
 let container = document.querySelector(".moviesContainer")
 titles.forEach( key => {
-  
   createCard(key)
 })
-
 let moviesArray = document.querySelectorAll(".movieCard").length
 for (let i = 0; i < moviesArray; i++) {
-  document.querySelectorAll(".movieCard")[i].addEventListener ("click", (e) => {
+  document.querySelectorAll(".movieCard")[i].addEventListener ("mouseover", (e) => {
     let selectedTitle = e.currentTarget.getAttribute("name")
     let popUp = document.getElementById(selectedTitle)
     popUp.classList.toggle("hide")
   })
+  
 } 
 
 function createCard(key) {
@@ -98,4 +97,15 @@ function fillContentPopUp(title, selectedDiv) {
   })
   
   
+}
+
+let variable = "year"
+let arr = []
+
+function sortingBy (variable) {
+    for(let i = 0; i < titles.length; i++) {
+        arr.push(movieData[titles[i]][variable])
+    }
+    // from the highest to the lowest
+    console.log(arr.sort().reverse()) 
 }
