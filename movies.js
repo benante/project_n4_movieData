@@ -35,26 +35,45 @@ let movieData = {
   };
 
 
-// let arraySorte = Object.entries(movieData)
-// console.log(arraySorte)
-// let select = document.getElementById("selector")  
-// select.addEventListener("change" , () => {
-//   console.log(select.options[select.selectedIndex].value)
-// })
+  // Get dropdown "sort by" value
+let select = document.getElementById("selector")
+select.addEventListener("change" , (event) => {
+  console.log(event.target.value)
+})
+// NEED TO WORK ON THIS SORTING FUNCTION
+// let variable = "rating"
+// let arr = []
+// function sortingBy (variable) {
+//   // Create sorted(descending values) array with dropdown selected option 
+//     for(let i = 0; i < titles.length; i++) {
+//         arr.push(movieData[titles[i]][variable])
+//     }
+//     arr = arr.sort().reverse()
+//     return arr 
+// }
+// console.log(sortingBy(variable))
 
 
 
-// RIGHT ONE!!!!! 
 
+// Create array with Object keys (Movie Titles)
 let titles = Object.keys(movieData)
-// Display movies
+titles = titles.sort()
+
+// Display movies by alphabetical order by defualt
 let container = document.querySelector(".moviesContainer")
+
 titles.forEach( key => {
   createCard(key)
 })
-let moviesArray = document.querySelectorAll(".movieCard").length
-for (let i = 0; i < moviesArray; i++) {
-  document.querySelectorAll(".movieCard")[i].addEventListener ("mouseover", (e) => {
+
+
+
+// NOT WORKING VERY WELL
+// Show movie pop up if movie-div is clicked.
+let moviesArray = document.querySelectorAll(".movieCard")
+for (let i = 0; i < moviesArray.length; i++) {
+  moviesArray[i].addEventListener ("click", (e) => {
     let selectedTitle = e.currentTarget.getAttribute("name")
     let popUp = document.getElementById(selectedTitle)
     popUp.classList.toggle("hide")
@@ -62,6 +81,7 @@ for (let i = 0; i < moviesArray; i++) {
   
 } 
 
+// Create a card for each movie in the database 
 function createCard(key) {
   let movieCard = document.createElement("div")
   let card = document.createElement("div")
@@ -82,7 +102,7 @@ function createCard(key) {
   popUp.classList.add("popup")
   fillContentPopUp(key, popUp);
 }
-
+// Create content in the pop up
 function fillContentPopUp(title, selectedDiv) {
   // this accesses the Object with key = titleMovie
   let movieObject = movieData[title] 
@@ -99,13 +119,6 @@ function fillContentPopUp(title, selectedDiv) {
   
 }
 
-let variable = "year"
-let arr = []
 
-function sortingBy (variable) {
-    for(let i = 0; i < titles.length; i++) {
-        arr.push(movieData[titles[i]][variable])
-    }
-    // from the highest to the lowest
-    console.log(arr.sort().reverse()) 
-}
+
+
