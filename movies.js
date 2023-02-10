@@ -38,7 +38,6 @@ let movies = {
 let movies_title = Object.keys(movies);
 movies_title = movies_title.sort();
 
-
 // Get dropdown "sort by" value (alphabetical by default)
 const select = document.getElementById("selector");
 let sortBy = select.value;
@@ -54,43 +53,40 @@ movies_title.forEach((movie) => {
 select.addEventListener("change", (event) => {
   console.log(event.target.value);
   sortBy = event.target.value;
-  orderBy(sortBy, movies_title, movies);
+  while (moviesContainer.firstChild) {
+    moviesContainer.removeChild(moviesContainer.firstChild);}
+  let sorted_movies = orderBy(sortBy, movies_title, movies);
+  sorted_movies.forEach(element => {
+    moviesContainer.append(createCard(element))
+  });
   //  showMovies()  DISPLAY MOVIES FUNC
 });
-
-
 
 function orderBy(sortByValue, movies_title, movies) {
   // GET VALUES YOU NEED FROM MOVIES OBJECT AND SORT THEM
   let sorted_selected_values = [];
-  let sorted_movies = []
+  let sorted_movies = [];
   for (let i = 0; i < movies_title.length; i++) {
     // Iterate through "movies" object with titles, get the values you need
     // push them into an ordered array
     if (sortByValue !== "alphabetical") {
-      console.log("value: " + sortByValue)
+      console.log("value: " + sortByValue);
       sorted_selected_values.push(movies[movies_title[i]][sortByValue]);
-      sorted_selected_values.sort().reverse(); 
-    }
-    else {
-      console.log("alpha")
-      return movies_title.sort()
-      
+      sorted_selected_values.sort().reverse();
+    } else {
+      return movies_title.sort();
     }
   }
   for (let i = 0; i < sorted_selected_values.length; i++) {
     for (let y = 0; y < movies_title.length; y++) {
       if (sorted_selected_values[i] === movies[movies_title[y]][sortByValue]) {
-        console.log("done")
-        sorted_movies.push(movies_title[y])
+        sorted_movies.push(movies_title[y]);
       }
     }
   }
-  console.log(sorted_movies)
-    
-  return sorted_movies
-}
 
+  return sorted_movies;
+}
 
 // NOT WORKING VERY WELL
 // Show movie pop up if movie-div is clicked.
