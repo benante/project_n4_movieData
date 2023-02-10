@@ -38,44 +38,59 @@ let movies = {
 let movies_title = Object.keys(movies);
 movies_title = movies_title.sort();
 
+
 // Get dropdown "sort by" value (alphabetical by default)
 const select = document.getElementById("selector");
 let sortBy = select.value;
 
-
-
 const moviesContainer = document.querySelector(".moviesContainer");
-
-select.addEventListener("change", (event) => {
-  console.log(event.target.value);
-  sortBy = event.target.value;
-  //  showMovies()  DISPLAY MOVIES FUNC
-});
-
-console.log(orderBy(sortBy, movies_title));
-
-function orderBy(sortByValue, movies_title) {
-  // GET VALUES YOU NEED FROM MOVIES OBJECT AND SORT THEM
-  let sorted_selected_values = [];
-  for (let i = 0; i < movies_title.length; i++) {
-    // Iterate through "movies" object with titles and get the values you need
-    if (sortByValue === "alphabetical") {
-      sorted_selected_values.push(movies_title[i]) 
-    }
-    else {
-      console.log("NOT alpha")
-      sorted_selected_values.push(movies[movies_title[i]][sortByValue]);
-      sorted_selected_values.sort().reverse();
-    }
-  }
-  return sorted_selected_values
-}
 
 // Display movies by alphabetical order by default
 
 movies_title.forEach((movie) => {
   moviesContainer.append(createCard(movie));
 });
+
+select.addEventListener("change", (event) => {
+  console.log(event.target.value);
+  sortBy = event.target.value;
+  orderBy(sortBy, movies_title, movies);
+  //  showMovies()  DISPLAY MOVIES FUNC
+});
+
+
+
+function orderBy(sortByValue, movies_title, movies) {
+  // GET VALUES YOU NEED FROM MOVIES OBJECT AND SORT THEM
+  let sorted_selected_values = [];
+  let sorted_movies = []
+  for (let i = 0; i < movies_title.length; i++) {
+    // Iterate through "movies" object with titles, get the values you need
+    // push them into an ordered array
+    if (sortByValue !== "alphabetical") {
+      console.log("value: " + sortByValue)
+      sorted_selected_values.push(movies[movies_title[i]][sortByValue]);
+      sorted_selected_values.sort().reverse(); 
+    }
+    else {
+      console.log("alpha")
+      return movies_title.sort()
+      
+    }
+  }
+  for (let i = 0; i < sorted_selected_values.length; i++) {
+    for (let y = 0; y < movies_title.length; y++) {
+      if (sorted_selected_values[i] === movies[movies_title[y]][sortByValue]) {
+        console.log("done")
+        sorted_movies.push(movies_title[y])
+      }
+    }
+  }
+  console.log(sorted_movies)
+    
+  return sorted_movies
+}
+
 
 // NOT WORKING VERY WELL
 // Show movie pop up if movie-div is clicked.
