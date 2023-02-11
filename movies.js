@@ -34,7 +34,9 @@ let movies = {
   },
 };
 
-// Create array with Object keys (Movie Titles)
+const moviesContainer = document.querySelector(".moviesContainer");
+
+// Create array with Object keys (Movie Titles) and sort it alphabetically
 let movies_title = Object.keys(movies);
 movies_title = movies_title.sort();
 
@@ -42,14 +44,16 @@ movies_title = movies_title.sort();
 const select = document.getElementById("selector");
 let sortBy = select.value;
 
-const moviesContainer = document.querySelector(".moviesContainer");
 
-// Display movies by alphabetical order by default
 
+// DISPLAY movies by alphabetical order by default
 movies_title.forEach((movie) => {
   moviesContainer.append(createCard(movie));
 });
 
+
+
+// DISPLAY movies according to year, rating or back to alphabetical
 select.addEventListener("change", (event) => {
   console.log(event.target.value);
   sortBy = event.target.value;
@@ -59,16 +63,18 @@ select.addEventListener("change", (event) => {
   sorted_movies.forEach(element => {
     moviesContainer.append(createCard(element))
   });
-  //  showMovies()  DISPLAY MOVIES FUNC
 });
+
+
 
 function orderBy(sortByValue, movies_title, movies) {
   // GET VALUES YOU NEED FROM MOVIES OBJECT AND SORT THEM
   let sorted_selected_values = [];
   let sorted_movies = [];
+
+  // Iterate through "movies" object with titles, get the values you need ("rating" , "year"...) and
+  // push them into an ordered array
   for (let i = 0; i < movies_title.length; i++) {
-    // Iterate through "movies" object with titles, get the values you need
-    // push them into an ordered array
     if (sortByValue !== "alphabetical") {
       console.log("value: " + sortByValue);
       sorted_selected_values.push(movies[movies_title[i]][sortByValue]);
@@ -77,6 +83,9 @@ function orderBy(sortByValue, movies_title, movies) {
       return movies_title.sort();
     }
   }
+  // Iterate through each movie and compare each sortByValue (ex "rating").
+  // When there's a match insert the name of the movie in the sorted_movie array that the createCard function
+  // will eventually take as argument
   for (let i = 0; i < sorted_selected_values.length; i++) {
     for (let y = 0; y < movies_title.length; y++) {
       if (sorted_selected_values[i] === movies[movies_title[y]][sortByValue]) {
@@ -84,22 +93,12 @@ function orderBy(sortByValue, movies_title, movies) {
       }
     }
   }
-
   return sorted_movies;
 }
 
-// NOT WORKING VERY WELL
-// Show movie pop up if movie-div is clicked.
-let moviesArray = document.querySelectorAll(".movieCard");
-for (let i = 0; i < moviesArray.length; i++) {
-  moviesArray[i].addEventListener("click", (e) => {
-    let selectedTitle = e.currentTarget.getAttribute("name");
-    let popUp = document.getElementById(selectedTitle);
-    popUp.classList.toggle("hide");
-  });
-}
 
-// Create a card for each movie in the database
+
+// Create a card movie 
 function createCard(key) {
   let movieCard = document.createElement("div");
   let movieTitle = document.createElement("div");
@@ -123,6 +122,9 @@ function createCard(key) {
   fillContentPopUp(key, popUp);
   return movieCard;
 }
+
+
+
 // Create content in the pop up
 function fillContentPopUp(title, selectedDiv) {
   // this accesses the Object with key = titleMovie
@@ -135,5 +137,16 @@ function fillContentPopUp(title, selectedDiv) {
     let paragraph = document.createElement("p");
     paragraph.innerHTML = movieObject[key];
     selectedDiv.append(main, paragraph);
+  });
+}
+
+// POP UP -------NOT WORKING VERY WELL
+// Show movie pop up if movie-div is clicked.
+let moviesArray = document.querySelectorAll(".movieCard");
+for (let i = 0; i < moviesArray.length; i++) {
+  moviesArray[i].addEventListener("click", (e) => {
+    let selectedTitle = e.currentTarget.getAttribute("name");
+    let popUp = document.getElementById(selectedTitle);
+    popUp.classList.toggle("hide");
   });
 }
