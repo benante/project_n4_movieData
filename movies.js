@@ -34,9 +34,7 @@ let movies = {
   },
 };
 
-const moviesContainer = document.querySelector(".moviesContainer");
-
-// Create array with Object keys (Movie Titles) and sort it alphabetically
+// Create array with Object keys (Movie Titles)
 let movies_title = Object.keys(movies);
 movies_title = movies_title.sort();
 
@@ -44,86 +42,61 @@ movies_title = movies_title.sort();
 const select = document.getElementById("selector");
 let sortBy = select.value;
 
+const moviesContainer = document.querySelector(".moviesContainer");
 
+// Display movies by alphabetical order by default
 
-// DISPLAY movies by alphabetical order by default
 movies_title.forEach((movie) => {
   moviesContainer.append(createCard(movie));
 });
 
-
-
-// DISPLAY movies according to year, rating or back to alphabetical
 select.addEventListener("change", (event) => {
   console.log(event.target.value);
   sortBy = event.target.value;
   while (moviesContainer.firstChild) {
-    moviesContainer.removeChild(moviesContainer.firstChild);}
+    moviesContainer.removeChild(moviesContainer.firstChild);
+  }
   let sorted_movies = orderBy(sortBy, movies_title, movies);
-  sorted_movies.forEach(element => {
-    moviesContainer.append(createCard(element))
+  sorted_movies.forEach((element) => {
+    moviesContainer.append(createCard(element));
   });
 });
 
-
-
-function orderBy(sortByValue, movies_title, movies) {
-  // GET VALUES YOU NEED FROM MOVIES OBJECT AND SORT THEM
-  let sorted_selected_values = [];
-  let sorted_movies = [];
-
-  // Iterate through "movies" object with titles, get the values you need ("rating" , "year"...) and
-  // push them into an ordered array
-  for (let i = 0; i < movies_title.length; i++) {
-    if (sortByValue !== "alphabetical") {
-      console.log("value: " + sortByValue);
-      sorted_selected_values.push(movies[movies_title[i]][sortByValue]);
-      sorted_selected_values.sort().reverse();
-    } else {
-      return movies_title.sort();
-    }
-  }
-  // Iterate through each movie and compare each sortByValue (ex "rating").
-  // When there's a match insert the name of the movie in the sorted_movie array that the createCard function
-  // will eventually take as argument
-  for (let i = 0; i < sorted_selected_values.length; i++) {
-    for (let y = 0; y < movies_title.length; y++) {
-      if (sorted_selected_values[i] === movies[movies_title[y]][sortByValue]) {
-        sorted_movies.push(movies_title[y]);
-      }
-    }
-  }
-  return sorted_movies;
-}
-
-
-
-// Create a card movie 
+// "Create a card" takes one argument, the name of a movie (the key of the Movies object)
 function createCard(key) {
+  // Create a card with a title, a picture and a corresponding pop up
   let movieCard = document.createElement("div");
   let movieTitle = document.createElement("div");
-  // lookForPic will standardize the name of the images given they are inserted
-  // ḅy the user correctly and they are in jpg format
-  let lookForPic = key.toLowerCase().replace(/\s/g, "");
-  let pic = document.createElement("img");
-  pic.src = "/static/" + lookForPic + ".jpg";
   let popUp = document.createElement("div");
+  let pic = document.createElement("img");
 
-  // moviesContainer.append(movieCard)
+  // "lookForPic" will standardize the name of the images given they are inserted
+  // ḅy the user correctly and they are in jpg format.
+  // It reduces the name of the file to look for into a lower case single string with no white space
+  let lookForPic = key.toLowerCase().replace(/\s/g, "");
+  pic.src = "/static/" + lookForPic + ".jpg";
+
+  // Append the inner elements of movieCard and add name attribute + css
   movieCard.append(pic, movieTitle, popUp);
-  // card.append(pic)
-  popUp.setAttribute("id", key);
-  movieTitle.innerHTML = key;
-
   movieCard.setAttribute("name", key);
   movieCard.classList.add("movieCard", "borders");
+
+  // Insert name of movie in movieTitle + css
+  movieTitle.innerHTML = key;
   movieTitle.classList.add("movietitle");
+
+  // Add name attribute + css and fill content
+  popUp.setAttribute("id", key);
   popUp.classList.add("popup");
   fillContentPopUp(key, popUp);
+
+  // Event listener added to each card: everytime it is clicked show pop up
+  movieCard.addEventListener("click", () => {
+    popUp.classList.toggle("hide");
+  });
+
   return movieCard;
 }
-
-
 
 // Create content in the pop up
 function fillContentPopUp(title, selectedDiv) {
@@ -140,13 +113,34 @@ function fillContentPopUp(title, selectedDiv) {
   });
 }
 
-// POP UP -------NOT WORKING VERY WELL
-// Show movie pop up if movie-div is clicked.
-let moviesArray = document.querySelectorAll(".movieCard");
-for (let i = 0; i < moviesArray.length; i++) {
-  moviesArray[i].addEventListener("click", (e) => {
-    let selectedTitle = e.currentTarget.getAttribute("name");
-    let popUp = document.getElementById(selectedTitle);
-    popUp.classList.toggle("hide");
+// Sorting function where sortByValue is "alphabetical", "year" or "rating"
+function orderBy(sortByValue, moviesTitleArray, moviesObject) {
+  let sorted_selected_values = [];
+  let sorted_movies = [];
+
+  // Iterate through "movies" object with titles
+  for (let i = 0; i < moviesTitleArray.length; i++) {
+    // If sortByValue === year or rating iterate through every movie,
+    // get the values you need and push them into a (ascending) sorted array
+    if (sortByValue !== "alphabetical") {
+      sorted_selected_values.push(
+        // example for the following line: moviesobject[moviesTitleArray["The Darjeeling Limited"]][rating]
+        moviesObject[moviesTitleArray[i]][sortByValue]
+      );
+      sorted_selected_values.sort().reverse();
+    } else {
+      return moviesTitleArray.sort();
+    }
+  }
+
+  // Compare each element of the sorted_selected_values array with every movie object corresponding key.
+  sorted_selected_values.forEach((element) => {
+    moviesTitleArray.forEach((title) => {
+      if (element === moviesObject[title][sortByValue]) {
+        sorted_movies.push(title);
+      }
+    });
   });
+  console.log("SORTED MOVIES" + sorted_movies);
+  return sorted_movies;
 }
