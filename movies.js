@@ -43,11 +43,34 @@ const select = document.getElementById("selector");
 let sortBy = select.value;
 
 const moviesContainer = document.querySelector(".moviesContainer");
-
+const btn_form_popUp = document.querySelector(".btn-form");
+const movie_form = document.querySelector(".movieForm");
+const btn_submitForm = document.querySelector(".btn-submit");
 // Display movies by alphabetical order by default
 
 movies_title.forEach((movie) => {
   moviesContainer.append(createCard(movie));
+});
+
+// Create a button that shows the form and create a blurred background.If the close button is clicked close the form
+btn_form_popUp.addEventListener("click", () => {
+  movie_form.style.display = "flex";
+  moviesContainer.style.filter = "blur(5px)";
+  let btnCloseForm = document.querySelector(".btn-close");
+  btnCloseForm.addEventListener("click", () => {
+    movie_form.style.display = "none";
+    moviesContainer.style.filter = "";
+  });
+});
+
+movie_form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  console.log("form submits ok");
+  let newMovie = new FormData(movie_form);
+  newMovie = newMovie.get("name");
+  // newMovie.year = FormData.get("year");
+
+  console.log(newMovie);
 });
 
 select.addEventListener("change", (event) => {

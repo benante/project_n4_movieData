@@ -10,7 +10,7 @@
   <body>
     <header class="navbar borders">
       <img src="static/video.png" alt="logo" class="logo" />
-      <form action="">
+      <form class="searchForm" action="">
         <input type="text" class="searchbar borders" />
       </form>
       <img src="static/video.png" alt="logo" class="logo" />
@@ -24,8 +24,38 @@
           <option value="year">year</option>
         </select>
       </div>
+      <button title="Add a movie" class="btn-form round">
+        <img class="icon-img" src="static/plus.png" alt="add-icon" />
+      </button>
+
       <div class="moviesContainer"></div>
     </div>
+    <form class="movieForm borders" action="index.html" method="post">
+      <button class="btn-form btn-close" type="button">
+        <img
+          class="icon-img"
+          src="static/close-button.png"
+          alt="close button form"
+        />
+      </button>
+      <label for="mtitle">Move Title:</label>
+      <input type="text" name="name" />
+      <label for="myear">Year:</label>
+      <input type="number" name="year" />
+      <label for="mcast">Cast</label>
+      <input
+        type="text"
+        name="cast"
+        placeholder="Insert a comma after each name"
+      />
+      <label for="mrating">Rating: </label>
+      <input type="number" name="rating" min="1" max="10" />
+      <label for="mruntime">Runtime: </label>
+      <input type="number" name="runtime" placeholder="in minutes" />
+      <label for="mplot">Plot</label>
+      <textarea name="plot" name="plot" id="" cols="30" rows="10"></textarea>
+      <button type="submit" class="btn-submit">Submit</button>
+    </form>
   </body>
   <script src="movies.js"></script>
 </html>
