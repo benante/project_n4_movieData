@@ -1,4 +1,4 @@
-let movies = {
+let moviesObject = {
   "The Darjeeling Limited": {
     plot: "A year after their father's funeral, three brothers travel across India by train in an attempt to bond with each other.",
     cast: ["Jason Schwartzman", "Owen Wilson", "Adrien Brody"],
@@ -35,24 +35,24 @@ let movies = {
 };
 
 // Create array with Object keys (Movie Titles)
-let movies_title = Object.keys(movies);
+let movies_title = Object.keys(moviesObject);
 movies_title = movies_title.sort();
 
-// Get dropdown "sort by" value (alphabetical by default)
+// Get dropdown "sort by" value ("alphabetical" by default)
 const select = document.getElementById("selector");
 let sortBy = select.value;
 
 const moviesContainer = document.querySelector(".moviesContainer");
-const btn_form_popUp = document.querySelector(".btn-form");
 const movie_form = document.querySelector(".movieForm");
+const btn_form_popUp = document.querySelector(".btn-form");
 const btn_submitForm = document.querySelector(".btn-submit");
-// Display movies by alphabetical order by default
 
+// Display movies by alphabetical order by default when page is loaded
 movies_title.forEach((movie) => {
   moviesContainer.append(createCard(movie));
 });
 
-// Create a button that shows the form and create a blurred background.If the close button is clicked close the form
+// Create a button that shows the form and create a blurred background.If the btn-close is clicked close the form
 btn_form_popUp.addEventListener("click", () => {
   movie_form.style.display = "flex";
   moviesContainer.style.filter = "blur(5px)";
@@ -63,29 +63,43 @@ btn_form_popUp.addEventListener("click", () => {
   });
 });
 
+// Submit form
 movie_form.addEventListener("submit", (event) => {
   event.preventDefault();
-  console.log("form submits ok");
+  // create a new object with FormData
   let newMovie = new FormData(movie_form);
-  newMovie = newMovie.get("name");
-  // newMovie.year = FormData.get("year");
+  let title = newMovie.get("title").toUpperCase();
+  newMovie = {
+    plot: newMovie.get("plot"),
+    cast: newMovie.get("cast").split(", "),
+    year: newMovie.get("year"),
+    rating: newMovie.get("rating"),
+    runtime: newMovie.get("runtime"),
+  };
+  // add new movie inside moviesObject.The key will be === to the title
+  moviesObject[title] = newMovie;
 
-  console.log(newMovie);
+  // close form & create new card
+  moviesContainer.style.filter = "";
+  movie_form.style.display = "none";
+  moviesContainer.append(createCard(title));
 });
 
+// SortBy layout
 select.addEventListener("change", (event) => {
-  console.log(event.target.value);
-  sortBy = event.target.value;
+  // Remove all the children of moviesContainer
   while (moviesContainer.firstChild) {
     moviesContainer.removeChild(moviesContainer.firstChild);
   }
-  let sorted_movies = orderBy(sortBy, movies_title, movies);
+  // get value of sortBy and display movies accordingly
+  sortBy = event.target.value;
+  let sorted_movies = orderBy(sortBy, movies_title, moviesObject);
   sorted_movies.forEach((element) => {
     moviesContainer.append(createCard(element));
   });
 });
 
-// "Create a card" takes one argument, the name of a movie (the key of the Movies object)
+// "createCard" takes one argument, the name of a movie (the key of the Movies object)
 function createCard(key) {
   // Create a card with a title, a picture and a corresponding pop up
   let movieCard = document.createElement("div");
@@ -105,7 +119,7 @@ function createCard(key) {
   movieCard.classList.add("movieCard", "borders");
 
   // Insert name of movie in movieTitle + css
-  movieTitle.innerHTML = key;
+  movieTitle.innerHTML = key.toUpperCase();
   movieTitle.classList.add("movietitle");
 
   // Add name attribute + css and fill content
@@ -124,7 +138,7 @@ function createCard(key) {
 // Create content in the pop up
 function fillContentPopUp(title, selectedDiv) {
   // this accesses the Object with key = titleMovie
-  let movieObject = movies[title];
+  let movieObject = moviesObject[title];
   // Loop through key/value pair of the selected movie object
   let keys = Object.keys(movieObject);
   keys.forEach((key) => {

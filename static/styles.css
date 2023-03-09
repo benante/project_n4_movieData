@@ -56,12 +56,24 @@ header {
   border: none;
   cursor: pointer;
 }
+.btn-form:hover {
+  background-color: #b7e7e8;
+}
 .btn-submit {
   width: fit-content;
   margin-top: 10px;
 }
 .btn-close {
   align-self: flex-end;
+  border-radius: 20%;
+  background-color: #b7e7e8;
+}
+.btn-close:hover {
+  background-color: #d8eaf2;
+}
+.btn-form:hover,
+.btn-close:hover {
+  box-shadow: 2px -1px gray;
 }
 .main {
   background-color: #d8eaf2;
