@@ -111,7 +111,7 @@ function createCard(key) {
   // ḅy the user correctly and they are in jpg format.
   // It reduces the name of the file to look for into a lower case single string with no white space
   let lookForPic = key.toLowerCase().replace(/\s/g, "");
-  pic.src = "/static/" + lookForPic + ".jpg";
+  pic.src = "static/" + lookForPic + ".jpg";
 
   // Append the inner elements of movieCard and add name attribute + css
   movieCard.append(pic, movieTitle, popUp);
