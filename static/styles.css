@@ -30,6 +30,7 @@ header {
   margin: 25px 20px;
   height: 50px;
   width: 50em;
+  font-size: 1em;
 }
 .movieForm {
   position: fixed;
@@ -153,4 +154,10 @@ header {
 p {
   margin: 15px auto;
   width: 100%;
+}
+
+@media (max-width: 500px) {
+  .main {
+    width: 90%;
+  }
 }
