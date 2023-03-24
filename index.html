@@ -8,15 +8,20 @@
     <title>Movie Data</title>
   </head>
   <body>
+    <!-- Navbar -->
     <header class="navbar borders">
       <img src="static/video.png" alt="logo" class="logo" />
+
+      <!-- Search Bar not implemented yet -->
       <form class="searchForm" action="">
         <input type="text" class="searchbar borders" />
       </form>
       <img src="static/video.png" alt="logo" class="logo" />
     </header>
+    <!-- Main container -->
     <div class="main borders">
       <div class="control_panel">
+        <!-- Sort by -->
         <label for="orderBy">Sort by:</label>
         <select name="list" id="selector">
           <option value="alphabetical" selected>alphabetical</option>
@@ -27,9 +32,11 @@
       <button title="Add a movie" class="btn-form round">
         <img class="icon-img" src="static/plus.png" alt="add-icon" />
       </button>
-
+      <!-- Movies container -->
       <div class="moviesContainer"></div>
     </div>
+    <!-- Add movies form -->
+    <!-- Try insert the movie with title "Isle of dogs" -->
     <form class="movieForm borders" action="index.html" method="post">
       <button class="btn-form btn-close" type="button">
         <img
@@ -65,5 +72,5 @@
       <button type="submit" class="btn-submit">Submit</button>
     </form>
   </body>
-  <script src="movies.js"></script>
+  <script src="app.js"></script>
 </html>

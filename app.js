@@ -43,6 +43,7 @@ const select = document.getElementById("selector");
 let sortBy = select.value;
 
 const moviesContainer = document.querySelector(".moviesContainer");
+const search_bar = document.querySelector(".searchbar");
 const movie_form = document.querySelector(".movieForm");
 const btn_form_popUp = document.querySelector(".btn-form");
 const btn_submitForm = document.querySelector(".btn-submit");
@@ -63,7 +64,7 @@ btn_form_popUp.addEventListener("click", () => {
   });
 });
 
-// Submit form
+// Submit form / movie
 movie_form.addEventListener("submit", (event) => {
   event.preventDefault();
   // create a new object with FormData
@@ -179,6 +180,5 @@ function orderBy(sortByValue, moviesTitleArray, moviesObject) {
       }
     });
   });
-  console.log("SORTED MOVIES" + sorted_movies);
   return sorted_movies;
 }
